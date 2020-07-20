@@ -22,25 +22,26 @@ const getFilteredPosts = (category) => {
 };
 
 // == Composant
-const App = () => (
-  <div className="blog">
-    <Header categories={categoriesData} />
-    <Switch>
-      {categoriesData.map((category) => {
-        return (
-          <Route key={category.label} exact path={category.route}>
-            <Posts posts={getFilteredPosts(category.label)} />
-          </Route>
-        );
-      })}
-      <Redirect from="/jquery" to="/react" />
-      <Route>
-        <NotFound />
-      </Route>
-    </Switch>
-    <Footer />
-  </div>
-);
-
+const App = () => {
+  return (
+    <div className="blog">
+      <Header categories={categoriesData} />
+      <Switch>
+        {categoriesData.map((category) => {
+          return (
+            <Route key={category.label} exact path={category.route}>
+              <Posts posts={getFilteredPosts(category.label)} />
+            </Route>
+          );
+        })}
+        <Redirect from="/jquery" to="/react" />
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+      <Footer />
+    </div>
+  );
+};
 // == Export
 export default App;
