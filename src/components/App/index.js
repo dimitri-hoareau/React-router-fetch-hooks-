@@ -6,11 +6,14 @@ import Header from "../Header";
 import Posts from "../Posts";
 import Footer from "../Footer";
 
+import categoriesData from "src/data/categories";
+import postsData from "src/data/posts";
+
 // == Composant
 const App = () => (
   <div className="blog">
-    <Header />
-    <Posts />
+    <Header categories={categoriesData} />
+    <Posts posts={postsData} />
     <Footer />
   </div>
 );
