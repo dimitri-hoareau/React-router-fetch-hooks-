@@ -3,6 +3,18 @@ import "./style.scss";
 
 const NotFound = () => {
   const [opened, setOpened] = useState(false);
+  const [person, setPerson] = useState({
+    prenom: "Charlotte",
+    birthday: true,
+    age: 22,
+  });
+
+  // Pour modifier le state "person"
+  // avec une class, j'aurais pu faire ça
+  // this.setState({ birthday: false });
+  // Avec les hooks, la méthode qui modifie mon state
+  // l'écrase COMPLÈTEMENT
+  // setPerson({ ...person, birthday: false })
   return (
     <div className="not-found">
       <h2

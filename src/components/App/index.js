@@ -10,6 +10,17 @@ import categoriesData from "src/data/categories";
 import postsData from "src/data/posts";
 import NotFoud from "../NotFound";
 
+/*
+
+Créer un composant Loading.
+L'importer dans App
+Créer un state (hooks) pour savoir si l'app est en cours de loading ou pas
+Si oui, afficher le composant Loading
+Sinon, afficher le composant normal
+
+
+*/
+
 const getFilteredPosts = (category) => {
   // Doit me RETURN
   // un tableau de posts filtrés
@@ -27,6 +38,8 @@ const App = () => {
     <div className="blog">
       <Header categories={categoriesData} />
       <Switch>
+        {/* { Si loading -> Loading } */}
+
         {categoriesData.map((category) => {
           return (
             <Route key={category.label} exact path={category.route}>
