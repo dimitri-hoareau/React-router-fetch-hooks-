@@ -1,13 +1,14 @@
 // == Import npm
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 // == Import
 import Header from "../Header";
 import Posts from "../Posts";
 import Footer from "../Footer";
-
+import NotFound from "../NotFound";
 import categoriesData from "src/data/categories";
 import postsData from "src/data/posts";
+import NotFoud from "../NotFound";
 
 const getFilteredPosts = (category) => {
   // Doit me RETURN
@@ -24,21 +25,19 @@ const getFilteredPosts = (category) => {
 const App = () => (
   <div className="blog">
     <Header categories={categoriesData} />
-    <Route exact path="/">
-      <Posts posts={getFilteredPosts("Accueil")} />
-    </Route>
-    <Route exact path="/angular">
-      <Posts posts={getFilteredPosts("Angular")} />
-    </Route>
-    <Route exact path="/react">
-      <Posts posts={getFilteredPosts("React")} />
-    </Route>
-    <Route exact path="/autre">
-      <Posts posts={getFilteredPosts("Autre")} />
-    </Route>
-    <Route exact path="/oclock">
-      <Posts posts={getFilteredPosts("O’clock")} />
-    </Route>
+    <Switch>
+      {categoriesData.map((category) => {
+        return (
+          <Route key={category.label} exact path={category.route}>
+            <Posts posts={getFilteredPosts(category.label)} />
+          </Route>
+        );
+      })}
+      <Redirect from="/jquery" to="/react" />
+      <Route>
+        <NotFound />
+      </Route>
+    </Switch>
     <Footer />
   </div>
 );
