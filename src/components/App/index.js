@@ -1,5 +1,5 @@
 // == Import npm
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import regeneratorRuntime from "regenerator-runtime";
 import axios from "axios";
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -10,7 +10,6 @@ import Footer from "../Footer";
 import NotFound from "../NotFound";
 import categoriesData from "src/data/categories";
 import Loading from "../Loading";
-import NotFoud from "../NotFound";
 
 /*
 Créer un composant Loading.
@@ -45,22 +44,21 @@ const App = () => {
         method: "get",
         url: "https://oclock-open-apis.now.sh/api/blog/posts",
       });
-      console.log(res.data);
+      console.log(res.data[2]);
       setArticles(res.data);
     } catch (e) {
       console.error(e);
     }
     setLoading(false);
   };
-
-  const handleClick = () => {
+  // Lorsque mon composant est monté
+  // exécuter fetchData
+  useEffect(() => {
     fetchData();
-  };
-
+  }, []);
   return (
     <div className="blog">
       <Header categories={categoriesData} />
-      <button onClick={handleClick}>Load</button>
       {loading && <Loading />}
       {!loading && (
         <Switch>
