@@ -1,5 +1,7 @@
 // == Import npm
 import React, { useState } from "react";
+import regeneratorRuntime from "regenerator-runtime";
+import axios from "axios";
 import { Route, Switch, Redirect } from "react-router-dom";
 // == Import
 import Header from "../Header";
@@ -7,53 +9,65 @@ import Posts from "../Posts";
 import Footer from "../Footer";
 import NotFound from "../NotFound";
 import categoriesData from "src/data/categories";
-import postsData from "src/data/posts";
 import Loading from "../Loading";
 import NotFoud from "../NotFound";
 
 /*
-
 Créer un composant Loading.
 L'importer dans App
 Créer un state (hooks) pour savoir si l'app est en cours de loading ou pas
 Si oui, afficher le composant Loading
 Sinon, afficher le composant normal
-
-
 */
 
-const getFilteredPosts = (category) => {
+const getFilteredPosts = (articles, category) => {
   // Doit me RETURN
   // un tableau de posts filtrés
   // selon la catégorie reçue
   // (si la catégorie === 'Accueil') je veux tous les posts
   if (category === "Accueil") {
-    return postsData;
+    return articles;
   }
-  return postsData.filter((post) => post.category === category);
+  return articles.filter((post) => post.category === category);
 };
 
 // == Composant
 const App = () => {
   const [loading, setLoading] = useState(false);
+  const [articles, setArticles] = useState([]);
+  // const [globalState, setGlobalState] = useState({ loading: false, articles: [] });
+
+  const fetchData = async () => {
+    setLoading(true);
+    // Utiliser axios pour faire la requête
+    try {
+      const res = await axios({
+        method: "get",
+        url: "https://oclock-open-apis.now.sh/api/blog/posts",
+      });
+      console.log(res.data);
+      setArticles(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+    setLoading(false);
+  };
+
+  const handleClick = () => {
+    fetchData();
+  };
 
   return (
     <div className="blog">
       <Header categories={categoriesData} />
-      <button
-        onClick={() => {
-          setLoading(!loading);
-        }}
-      >
-        Load
-      </button>
+      <button onClick={handleClick}>Load</button>
       {loading && <Loading />}
       {!loading && (
         <Switch>
           {categoriesData.map((category) => {
             return (
               <Route key={category.label} exact path={category.route}>
-                <Posts posts={getFilteredPosts(category.label)} />
+                <Posts posts={getFilteredPosts(articles, category.label)} />
               </Route>
             );
           })}
