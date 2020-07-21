@@ -8,7 +8,6 @@ import Header from "../Header";
 import Posts from "../Posts";
 import Footer from "../Footer";
 import NotFound from "../NotFound";
-import categoriesData from "src/data/categories";
 import Loading from "../Loading";
 
 /*
@@ -34,9 +33,10 @@ const getFilteredPosts = (articles, category) => {
 const App = () => {
   const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
+  const [categories, setCategories] = useState([]);
   // const [globalState, setGlobalState] = useState({ loading: false, articles: [] });
 
-  const fetchData = async () => {
+  const fetchPosts = async () => {
     setLoading(true);
     // Utiliser axios pour faire la requête
     try {
@@ -51,18 +51,35 @@ const App = () => {
     }
     setLoading(false);
   };
+
+  const fetchCategories = async () => {
+    setLoading(true);
+    try {
+      const res = await axios({
+        method: "get",
+        url: "https://oclock-open-apis.now.sh/api/blog/categories",
+      });
+
+      console.log(res.data);
+      setCategories(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+    setLoading(false);
+  };
   // Lorsque mon composant est monté
   // exécuter fetchData
   useEffect(() => {
-    fetchData();
+    fetchCategories();
+    fetchPosts();
   }, []);
   return (
     <div className="blog">
-      <Header categories={categoriesData} />
+      <Header categories={categories} />
       {loading && <Loading />}
       {!loading && (
         <Switch>
-          {categoriesData.map((category) => {
+          {categories.map((category) => {
             return (
               <Route key={category.label} exact path={category.route}>
                 <Posts posts={getFilteredPosts(articles, category.label)} />
