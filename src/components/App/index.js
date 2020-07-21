@@ -60,6 +60,7 @@ const App = () => {
     );
     fetchAPI("https://oclock-open-apis.now.sh/api/blog/posts", setArticles);
   }, []);
+
   return (
     <div className="blog">
       <Header categories={categories} />

@@ -52,6 +52,7 @@
     "prop-types": "^15.7.2",
     "react": "*",
     "react-dom": "*",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "slugify": "^1.4.4"
   }
 }
