@@ -1,4 +1,5 @@
 import React from "react";
+import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 
 const Post = ({ title, category, excerpt }) => (
@@ -7,7 +8,7 @@ const Post = ({ title, category, excerpt }) => (
     <div className="post-category">{category}</div>
     <p
       className="post-excerpt"
-      dangerouslySetInnerHTML={{ __html: excerpt }}
+      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(excerpt) }}
     ></p>
   </article>
 );
