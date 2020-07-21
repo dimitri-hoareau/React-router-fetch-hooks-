@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 
-const Post = ({ title, category, excerpt }) => (
+const Post = ({ title, category, excerpt, slug }) => (
   <article className="post">
-    <Link to={`/articles/${slugify(title, { strict: true, lower: true })}`}>
+    <Link to={`/articles/${slug}`}>
       <h2 className="post-title">{title}</h2>
     </Link>
     <div className="post-category">{category}</div>

@@ -9,6 +9,7 @@ import Posts from "../Posts";
 import Footer from "../Footer";
 import NotFound from "../NotFound";
 import Loading from "../Loading";
+import View from "../Posts/View";
 
 /*
 Créer un composant Loading.
@@ -74,6 +75,10 @@ const App = () => {
               </Route>
             );
           })}
+
+          <Route path="/articles/:titreSlugifie">
+            <View posts={articles} />
+          </Route>
           <Redirect from="/jquery" to="/react" />
           <Route>
             <NotFound />
