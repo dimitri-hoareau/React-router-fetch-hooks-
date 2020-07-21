@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./style.scss";
 
 const NotFound = () => {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState(true);
   const [person, setPerson] = useState({
     prenom: "Charlotte",
     birthday: true,
