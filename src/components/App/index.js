@@ -36,32 +36,16 @@ const App = () => {
   const [categories, setCategories] = useState([]);
   // const [globalState, setGlobalState] = useState({ loading: false, articles: [] });
 
-  const fetchPosts = async () => {
+  const fetchAPI = async (url, method) => {
     setLoading(true);
     // Utiliser axios pour faire la requête
     try {
       const res = await axios({
         method: "get",
-        url: "https://oclock-open-apis.now.sh/api/blog/posts",
+        url: url,
       });
       console.log(res.data[2]);
-      setArticles(res.data);
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  };
-
-  const fetchCategories = async () => {
-    setLoading(true);
-    try {
-      const res = await axios({
-        method: "get",
-        url: "https://oclock-open-apis.now.sh/api/blog/categories",
-      });
-
-      console.log(res.data);
-      setCategories(res.data);
+      method(res.data);
     } catch (e) {
       console.error(e);
     }
@@ -70,8 +54,11 @@ const App = () => {
   // Lorsque mon composant est monté
   // exécuter fetchData
   useEffect(() => {
-    fetchCategories();
-    fetchPosts();
+    fetchAPI(
+      "https://oclock-open-apis.now.sh/api/blog/categories",
+      setCategories
+    );
+    fetchAPI("https://oclock-open-apis.now.sh/api/blog/posts", setArticles);
   }, []);
   return (
     <div className="blog">
